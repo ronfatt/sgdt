@@ -3,19 +3,21 @@
 import React from "react";
 import Image from "next/image";
 import { MessageSquare, Send, Github, FileText, ArrowUp } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Footer: React.FC = () => {
+  const { t } = useLanguage();
+
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const navLinks = [
-    { name: "ECOSYSTEM", href: "#ecosystem" },
-    { name: "TOKENOMICS", href: "#tokenomics" },
-    { name: "WHITEPAPER", href: "#whitepaper" },
-    { name: "ROADMAP", href: "#roadmap" },
-    { name: "COMMUNITY", href: "#community" },
-    { name: "CONTACT", href: "#contact" },
+    { name: t.nav.ecosystem, href: "#ecosystem" },
+    { name: t.nav.tokenomics, href: "#tokenomics" },
+    { name: t.nav.whitepaper, href: "#whitepaper" },
+    { name: t.nav.roadmap, href: "#roadmap" },
+    { name: t.nav.community, href: "#community" },
   ];
 
   return (
@@ -38,7 +40,7 @@ export const Footer: React.FC = () => {
             </div>
 
             <p className="text-xs text-[#8E8E8E] leading-relaxed max-w-sm">
-              Building The Next-Generation Digital Ecosystem. Integrating computing power, token burn, and global community networks into a sustainable Web3 digital economy.
+              {t.footer.tagline}
             </p>
 
             {/* Social Media Icons */}
@@ -77,7 +79,7 @@ export const Footer: React.FC = () => {
           {/* Ecosystem Navigation Links (4 cols) */}
           <div className="md:col-span-4 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-widest text-[#F5F5F5] mb-3">
-              QUICK NAVIGATION
+              {t.footer.quickNav}
             </h4>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {navLinks.map((link) => (
@@ -98,16 +100,16 @@ export const Footer: React.FC = () => {
               onClick={handleScrollToTop}
               className="p-3 rounded-xl border border-[#D6A63C]/30 bg-[#0A0A0A] text-[#F0C75E] hover:bg-[#D6A63C]/20 hover:border-[#F0C75E] transition-all flex items-center gap-2 text-xs font-bold uppercase tracking-wider group"
             >
-              <span>TOP OF PAGE</span>
+              <span>{t.footer.topOfPage}</span>
               <ArrowUp className="w-4 h-4 group-hover:-translate-y-1 transition-transform" />
             </button>
 
             <div className="text-left md:text-right">
               <span className="text-[10px] font-mono text-[#8E8E8E] block">
-                MAINNET ENGINE
+                {t.footer.mainnetEngine}
               </span>
               <span className="text-xs font-bold text-[#F0C75E] uppercase">
-                v2.4 INSTITUTIONAL MESH
+                {t.footer.institutionalMesh}
               </span>
             </div>
           </div>
@@ -117,11 +119,11 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright & Risk Disclosure */}
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] leading-relaxed">
           <p className="text-[#8E8E8E]">
-            © 2026 SGDT. All Rights Reserved.
+            {t.footer.copyright}
           </p>
 
           <p className="text-[#666666] max-w-xl text-center md:text-right text-[10px]">
-            <strong className="text-[#8E8E8E]">Risk Disclosure:</strong> Digital assets involve market risks. Information presented on this website is for ecosystem introduction purposes only and does not constitute financial or investment advice.
+            <strong className="text-[#8E8E8E]">{t.footer.riskTitle}</strong> {t.footer.riskDesc}
           </p>
         </div>
 

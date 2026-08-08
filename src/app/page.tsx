@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { BackgroundEffect } from "@/components/BackgroundEffect";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Navbar } from "@/components/Navbar";
@@ -16,48 +19,50 @@ import { Footer } from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-[#050505] text-[#F5F5F5] overflow-hidden font-body">
-      {/* Dynamic Background Effects */}
-      <BackgroundEffect />
+    <LanguageProvider>
+      <main className="relative min-h-screen bg-[#050505] text-[#F5F5F5] overflow-hidden font-body">
+        {/* Dynamic Background Effects */}
+        <BackgroundEffect />
 
-      {/* Desktop Custom Halo Cursor */}
-      <CustomCursor />
+        {/* Desktop Custom Halo Cursor */}
+        <CustomCursor />
 
-      {/* Header Sticky Glass Navigation */}
-      <Navbar />
+        {/* Header Sticky Glass Navigation */}
+        <Navbar />
 
-      {/* Hero Section */}
-      <Hero />
+        {/* Hero Section */}
+        <Hero />
 
-      {/* Live Data Metrics Bar */}
-      <MetricBar />
+        {/* Live Data Metrics Bar */}
+        <MetricBar />
 
-      {/* SGDT Ecosystem Section */}
-      <EcosystemDiagram />
+        {/* SGDT Ecosystem Section */}
+        <EcosystemDiagram />
 
-      {/* Three Core Pillars Section */}
-      <ThreeCorePillars />
+        {/* Three Core Pillars Section */}
+        <ThreeCorePillars />
 
-      {/* Why SGDT Features Section */}
-      <WhySGDT />
+        {/* Why SGDT Features Section */}
+        <WhySGDT />
 
-      {/* Double Cycle Economy Section */}
-      <DoubleCycle />
+        {/* Double Cycle Economy Section */}
+        <DoubleCycle />
 
-      {/* Ecosystem Flywheel Section */}
-      <Flywheel />
+        {/* Ecosystem Flywheel Section */}
+        <Flywheel />
 
-      {/* Global Network Section */}
-      <GlobalNetwork />
+        {/* Global Network Section */}
+        <GlobalNetwork />
 
-      {/* Milestone Roadmap Section */}
-      <Roadmap />
+        {/* Milestone Roadmap Section */}
+        <Roadmap />
 
-      {/* Final Portal CTA Section */}
-      <FinalCTA />
+        {/* Final Portal CTA Section */}
+        <FinalCTA />
 
-      {/* Footer Section */}
-      <Footer />
-    </main>
+        {/* Footer Section */}
+        <Footer />
+      </main>
+    </LanguageProvider>
   );
 }

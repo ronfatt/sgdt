@@ -4,46 +4,33 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { RefreshCw, Users } from "lucide-react";
-
-const valueNodes = [
-  { id: "v1", title: "Digital Asset", desc: "Base liquidity & reserve asset" },
-  { id: "v2", title: "Computing Power", desc: "Hardware infrastructure engagement" },
-  { id: "v3", title: "Reward", desc: "Algorithmic incentive distribution" },
-  { id: "v4", title: "Burn", desc: "Contract supply destruction" },
-  { id: "v5", title: "Scarcity", desc: "Reduced circulating tokens" },
-  { id: "v6", title: "Value Cycle", desc: "Self-sustaining price feedback" },
-];
-
-const communityNodes = [
-  { id: "c1", title: "User", desc: "Individual participant onboarding" },
-  { id: "c2", title: "Community", desc: "Global decentralized node clusters" },
-  { id: "c3", title: "Network", desc: "Compounding connectivity effects" },
-  { id: "c4", title: "Application", desc: "Decentralized ecosystem services" },
-  { id: "c5", title: "Traffic", desc: "High-volume protocol usage" },
-  { id: "c6", title: "New User", desc: "Continuous organic growth" },
-];
+import { useLanguage } from "@/context/LanguageContext";
 
 export const DoubleCycle: React.FC = () => {
+  const { t } = useLanguage();
   const [hoveredNode, setHoveredNode] = useState<{ title: string; desc: string } | null>(null);
+
+  const valueKeys = ["v1", "v2", "v3", "v4", "v5", "v6"];
+  const communityKeys = ["c1", "c2", "c3", "c4", "c5", "c6"];
 
   return (
     <section className="relative py-16 sm:py-24 z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
           <span className="text-[10px] sm:text-[11px] font-headline font-bold tracking-widest text-[#F0C75E] uppercase px-3 py-1 rounded-full border border-[#D6A63C]/30 bg-[#0A0A0A]">
-            ECONOMIC ENGINE
+            {t.doubleCycle.label}
           </span>
           <h2 className="text-2xl sm:text-4xl lg:text-5xl font-headline font-extrabold tracking-tight text-white uppercase mt-3 mb-2">
-            THE DOUBLE <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFE09A] via-[#F0C75E] to-[#D6A63C]">CYCLE</span>
+            {t.doubleCycle.title} <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#FFE09A] via-[#F0C75E] to-[#D6A63C]">{t.doubleCycle.titleHighlight}</span>
           </h2>
           <h3 className="text-xs sm:text-sm font-headline font-bold tracking-widest text-[#D6A63C] uppercase">
-            ECONOMIC EFFECT × NETWORK EFFECT
+            {t.doubleCycle.subtitle}
           </h3>
         </div>
 
-        {/* Double Cycle Visual Layout (Stacked on Mobile, Side-by-side on Desktop) */}
+        {/* Double Cycle Visual Layout */}
         <div className="relative flex flex-col lg:flex-row items-center justify-center gap-10 lg:gap-16 py-4 sm:py-8">
           
           {/* LEFT: VALUE CYCLE */}
@@ -53,14 +40,14 @@ export const DoubleCycle: React.FC = () => {
             <div className="text-center pointer-events-none z-10">
               <RefreshCw className="w-5 h-5 sm:w-6 sm:h-6 text-[#F0C75E] mx-auto mb-1 animate-spin-slow" />
               <span className="text-[10px] sm:text-xs font-headline font-bold text-[#FFE09A] uppercase tracking-wider block">
-                VALUE CYCLE
+                {t.doubleCycle.valueCycle}
               </span>
-              <span className="text-[8px] sm:text-[9px] font-mono text-[#8E8E8E]">ECONOMIC EFFECT</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-[#8E8E8E]">{t.doubleCycle.economicEffect}</span>
             </div>
 
-            {/* Orbiting Value Nodes */}
-            {valueNodes.map((node, i) => {
-              const angle = (i * 360) / valueNodes.length - 90;
+            {valueKeys.map((key, i) => {
+              const node = t.doubleCycle.valueNodes[key];
+              const angle = (i * 360) / valueKeys.length - 90;
               const rad = (angle * Math.PI) / 180;
               const r = 42;
               const left = 50 + r * Math.cos(rad);
@@ -68,7 +55,7 @@ export const DoubleCycle: React.FC = () => {
 
               return (
                 <div
-                  key={node.id}
+                  key={key}
                   onClick={() => setHoveredNode(node)}
                   onMouseEnter={() => setHoveredNode(node)}
                   onMouseLeave={() => setHoveredNode(null)}
@@ -103,16 +90,15 @@ export const DoubleCycle: React.FC = () => {
             </div>
             
             <div className="text-[10px] sm:text-xs font-headline font-bold text-white uppercase tracking-widest mb-0.5">
-              NETWORK EFFECT
+              {t.doubleCycle.networkEffect}
             </div>
             <div className="text-base sm:text-lg font-headline font-extrabold text-[#F0C75E]">
               ×
             </div>
             <div className="text-[10px] sm:text-xs font-headline font-bold text-white uppercase tracking-widest mb-2.5">
-              ECONOMIC EFFECT
+              {t.doubleCycle.economicEffect}
             </div>
 
-            {/* Node Description Box */}
             <div className="w-full pt-2.5 border-t border-[#1F1F1F] min-h-[48px] flex flex-col justify-center">
               {hoveredNode ? (
                 <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -125,7 +111,7 @@ export const DoubleCycle: React.FC = () => {
                 </motion.div>
               ) : (
                 <span className="text-[8px] sm:text-[9px] text-[#8E8E8E] font-mono italic">
-                  Tap / hover any node for details
+                  {t.doubleCycle.hoverHint}
                 </span>
               )}
             </div>
@@ -138,14 +124,14 @@ export const DoubleCycle: React.FC = () => {
             <div className="text-center pointer-events-none z-10">
               <Users className="w-5 h-5 sm:w-6 sm:h-6 text-[#F0C75E] mx-auto mb-1 animate-pulse" />
               <span className="text-[10px] sm:text-xs font-headline font-bold text-[#FFE09A] uppercase tracking-wider block">
-                COMMUNITY CYCLE
+                {t.doubleCycle.communityCycle}
               </span>
-              <span className="text-[8px] sm:text-[9px] font-mono text-[#8E8E8E]">NETWORK EFFECT</span>
+              <span className="text-[8px] sm:text-[9px] font-mono text-[#8E8E8E]">{t.doubleCycle.networkEffect}</span>
             </div>
 
-            {/* Orbiting Community Nodes */}
-            {communityNodes.map((node, i) => {
-              const angle = (i * 360) / communityNodes.length - 90;
+            {communityKeys.map((key, i) => {
+              const node = t.doubleCycle.communityNodes[key];
+              const angle = (i * 360) / communityKeys.length - 90;
               const rad = (angle * Math.PI) / 180;
               const r = 42;
               const left = 50 + r * Math.cos(rad);
@@ -153,7 +139,7 @@ export const DoubleCycle: React.FC = () => {
 
               return (
                 <div
-                  key={node.id}
+                  key={key}
                   onClick={() => setHoveredNode(node)}
                   onMouseEnter={() => setHoveredNode(node)}
                   onMouseLeave={() => setHoveredNode(null)}

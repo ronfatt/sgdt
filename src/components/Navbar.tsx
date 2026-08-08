@@ -2,12 +2,14 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { lang, setLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -19,11 +21,11 @@ export const Navbar: React.FC = () => {
   }, []);
 
   const navLinks = [
-    { name: "ECOSYSTEM", href: "#ecosystem" },
-    { name: "TOKENOMICS", href: "#tokenomics" },
-    { name: "ROADMAP", href: "#roadmap" },
-    { name: "COMMUNITY", href: "#community" },
-    { name: "WHITEPAPER", href: "#whitepaper" },
+    { name: t.nav.ecosystem, href: "#ecosystem" },
+    { name: t.nav.tokenomics, href: "#tokenomics" },
+    { name: t.nav.roadmap, href: "#roadmap" },
+    { name: t.nav.community, href: "#community" },
+    { name: t.nav.whitepaper, href: "#whitepaper" },
   ];
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -37,6 +39,10 @@ export const Navbar: React.FC = () => {
     }
   };
 
+  const toggleLanguage = () => {
+    setLang(lang === "en" ? "zh" : "en");
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
@@ -48,14 +54,13 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           
-          {/* Left: SGDT Logo (3D Metallic Logo) */}
+          {/* Left: SGDT Logo */}
           <a
             href="#"
             onClick={(e) => handleScrollTo(e, "#hero")}
             className="flex items-center gap-2.5 group focus:outline-none"
           >
             <div className="relative h-8 sm:h-10 w-auto flex items-center">
-              {/* Full Horizontal Logo (Icon + SGDT Text) */}
               <Image
                 src="/images/logo-sgdt-full.png"
                 alt="SGDT Protocol"
@@ -82,8 +87,19 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right: Join SGDT CTA (Desktop) */}
-          <div className="hidden md:flex items-center">
+          {/* Right Actions: Language Switcher & Join SGDT */}
+          <div className="hidden md:flex items-center space-x-4">
+            {/* Language Switcher */}
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-[#D6A63C]/30 bg-[#0A0A0A] text-[11px] font-headline font-semibold text-[#FFE09A] hover:border-[#F0C75E] hover:bg-[#D6A63C]/10 transition-all duration-300 shadow-[0_0_10px_rgba(214,166,60,0.1)]"
+              title="Switch Language / 切换语言"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#F0C75E]" />
+              <span>{lang === "en" ? "中文" : "ENGLISH"}</span>
+            </button>
+
+            {/* Join CTA */}
             <a
               href="#community"
               onClick={(e) => handleScrollTo(e, "#community")}
@@ -91,14 +107,22 @@ export const Navbar: React.FC = () => {
             >
               <span className="absolute inset-0 bg-gradient-to-r from-[#D6A63C]/20 via-[#F0C75E]/30 to-[#D6A63C]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="relative z-10 flex items-center gap-1.5 text-white group-hover:text-[#FFE09A]">
-                JOIN SGDT
+                {t.nav.joinSgdt}
                 <ArrowUpRight className="w-3.5 h-3.5 text-[#F0C75E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </span>
             </a>
           </div>
 
-          {/* Mobile Hamburger Toggle Button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Right Controls: Language Button + Hamburger */}
+          <div className="md:hidden flex items-center space-x-2">
+            <button
+              onClick={toggleLanguage}
+              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[10px] font-headline font-bold text-[#F0C75E] bg-[#0A0A0A] border border-[#D6A63C]/30"
+            >
+              <Globe className="w-3.5 h-3.5 text-[#F0C75E]" />
+              <span>{lang === "en" ? "中" : "EN"}</span>
+            </button>
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg text-[#F5F5F5] hover:text-[#F0C75E] bg-[#0A0A0A] border border-[#D6A63C]/20 focus:outline-none"
@@ -115,7 +139,7 @@ export const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Glassmorphism Full Overlay Drawer */}
+      {/* Mobile Drawer Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -141,13 +165,21 @@ export const Navbar: React.FC = () => {
                 </motion.a>
               ))}
 
-              <div className="pt-3">
+              <div className="pt-2 flex items-center justify-between gap-3">
+                <button
+                  onClick={toggleLanguage}
+                  className="w-1/3 py-3 text-xs font-bold font-headline rounded-md border border-[#D6A63C]/40 bg-[#0A0A0A] text-[#FFE09A] flex items-center justify-center gap-1.5"
+                >
+                  <Globe className="w-4 h-4 text-[#F0C75E]" />
+                  <span>{lang === "en" ? "中文" : "ENGLISH"}</span>
+                </button>
+
                 <a
                   href="#community"
                   onClick={(e) => handleScrollTo(e, "#community")}
-                  className="w-full text-center py-3.5 px-4 text-xs font-bold tracking-widest uppercase font-headline bg-gradient-to-r from-[#FFE09A] via-[#F0C75E] to-[#D6A63C] text-black rounded-md shadow-[0_0_20px_rgba(214,166,60,0.3)] block"
+                  className="w-2/3 text-center py-3 text-xs font-bold tracking-widest uppercase font-headline bg-gradient-to-r from-[#FFE09A] via-[#F0C75E] to-[#D6A63C] text-black rounded-md shadow-[0_0_20px_rgba(214,166,60,0.3)] block"
                 >
-                  JOIN SGDT ECOSYSTEM
+                  {t.nav.joinSgdt}
                 </a>
               </div>
             </div>
