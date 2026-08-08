@@ -11,11 +11,7 @@ export const Navbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 20) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -45,45 +41,33 @@ export const Navbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         scrolled
-          ? "bg-[#050505]/85 backdrop-blur-md border-b border-[#D6A63C]/25 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.8)]"
-          : "bg-transparent py-5"
+          ? "bg-[#050505]/90 backdrop-blur-xl border-b border-[#D6A63C]/25 py-3 shadow-[0_4px_30px_rgba(0,0,0,0.85)]"
+          : "bg-transparent py-4 sm:py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Left: SGDT Logo */}
+          
+          {/* Left: SGDT Logo (3D Metallic Logo) */}
           <a
             href="#"
             onClick={(e) => handleScrollTo(e, "#hero")}
-            className="flex items-center gap-3 group focus:outline-none"
+            className="flex items-center gap-2.5 group focus:outline-none"
           >
-            <div className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-lg p-0.5 border border-[#D6A63C]/30 bg-[#0A0A0A] group-hover:border-[#F0C75E] transition-colors duration-300">
+            <div className="relative h-8 sm:h-10 w-auto flex items-center">
+              {/* Full Horizontal Logo (Icon + SGDT Text) */}
               <Image
-                src="/images/logo-sgdt.png"
-                alt="SGDT Logo"
-                width={40}
+                src="/images/logo-sgdt-full.png"
+                alt="SGDT Protocol"
+                width={140}
                 height={40}
-                className="w-full h-full object-contain"
-                onError={(e) => {
-                  // Fallback handling if image is loading
-                  e.currentTarget.style.display = "none";
-                }}
+                className="h-7 sm:h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                priority
               />
-              <div className="absolute inset-0 flex items-center justify-center font-headline font-bold text-lg text-[#F0C75E] group-hover:scale-105 transition-transform duration-300">
-                S
-              </div>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-headline font-bold text-xl sm:text-2xl tracking-wider text-white group-hover:text-[#F0C75E] transition-colors">
-                SGDT
-              </span>
-              <span className="text-[9px] tracking-widest text-[#8E8E8E] -mt-1 font-mono uppercase">
-                Protocol
-              </span>
             </div>
           </a>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation Links */}
           <nav className="hidden md:flex items-center space-x-8">
             {navLinks.map((link) => (
               <a
@@ -98,12 +82,12 @@ export const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          {/* Right: Join SGDT CTA */}
+          {/* Right: Join SGDT CTA (Desktop) */}
           <div className="hidden md:flex items-center">
             <a
               href="#community"
               onClick={(e) => handleScrollTo(e, "#community")}
-              className="relative group overflow-hidden rounded-md px-5 py-2.5 text-xs font-semibold tracking-wider uppercase font-headline border border-[#D6A63C]/50 hover:border-[#F0C75E] transition-all duration-300 shadow-[0_0_15px_rgba(214,166,60,0.15)] hover:shadow-[0_0_25px_rgba(240,199,94,0.3)] text-[#F5F5F5]"
+              className="relative group overflow-hidden rounded-md px-5 py-2.5 text-xs font-semibold tracking-wider uppercase font-headline border border-[#D6A63C]/50 hover:border-[#F0C75E] transition-all duration-300 shadow-[0_0_15px_rgba(214,166,60,0.15)] hover:shadow-[0_0_25px_rgba(240,199,94,0.35)] text-[#F5F5F5]"
             >
               <span className="absolute inset-0 bg-gradient-to-r from-[#D6A63C]/20 via-[#F0C75E]/30 to-[#D6A63C]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               <span className="relative z-10 flex items-center gap-1.5 text-white group-hover:text-[#FFE09A]">
@@ -113,52 +97,59 @@ export const Navbar: React.FC = () => {
             </a>
           </div>
 
-          {/* Mobile Hamburger Toggle */}
+          {/* Mobile Hamburger Toggle Button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-[#F5F5F5] hover:text-[#F0C75E] focus:outline-none"
-              aria-label="Toggle menu"
+              className="p-2 rounded-lg text-[#F5F5F5] hover:text-[#F0C75E] bg-[#0A0A0A] border border-[#D6A63C]/20 focus:outline-none"
+              aria-label="Toggle navigation menu"
             >
               {mobileMenuOpen ? (
-                <X className="w-6 h-6 text-[#F0C75E]" />
+                <X className="w-5 h-5 text-[#F0C75E]" />
               ) : (
-                <Menu className="w-6 h-6 text-[#F5F5F5]" />
+                <Menu className="w-5 h-5 text-[#F5F5F5]" />
               )}
             </button>
           </div>
+
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Glassmorphism Full Overlay Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25 }}
-            className="md:hidden fixed inset-x-0 top-[60px] bg-[#050505]/95 backdrop-blur-xl border-b border-[#D6A63C]/30 py-6 px-6 shadow-2xl z-50 flex flex-col space-y-5"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden bg-[#050505]/95 backdrop-blur-2xl border-b border-[#D6A63C]/30 shadow-2xl"
           >
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={(e) => handleScrollTo(e, link.href)}
-                className="text-sm font-headline tracking-widest text-[#F5F5F5] hover:text-[#F0C75E] py-2 border-b border-[#141414] transition-colors uppercase flex items-center justify-between"
-              >
-                <span>{link.name}</span>
-                <span className="text-xs text-[#D6A63C]/50">→</span>
-              </a>
-            ))}
-            <div className="pt-2">
-              <a
-                href="#community"
-                onClick={(e) => handleScrollTo(e, "#community")}
-                className="w-full block text-center py-3 px-4 text-xs font-bold tracking-widest uppercase font-headline bg-gradient-to-r from-[#D6A63C] via-[#F0C75E] to-[#D6A63C] text-black rounded-md shadow-[0_0_20px_rgba(214,166,60,0.3)]"
-              >
-                JOIN SGDT ECOSYSTEM
-              </a>
+            <div className="px-6 py-6 space-y-4 flex flex-col">
+              {navLinks.map((link, idx) => (
+                <motion.a
+                  key={link.name}
+                  href={link.href}
+                  onClick={(e) => handleScrollTo(e, link.href)}
+                  initial={{ opacity: 0, x: -10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="text-sm font-headline tracking-widest text-[#F5F5F5] hover:text-[#F0C75E] py-2.5 border-b border-[#141414] transition-colors uppercase flex items-center justify-between"
+                >
+                  <span>{link.name}</span>
+                  <span className="text-xs text-[#D6A63C]">→</span>
+                </motion.a>
+              ))}
+
+              <div className="pt-3">
+                <a
+                  href="#community"
+                  onClick={(e) => handleScrollTo(e, "#community")}
+                  className="w-full text-center py-3.5 px-4 text-xs font-bold tracking-widest uppercase font-headline bg-gradient-to-r from-[#FFE09A] via-[#F0C75E] to-[#D6A63C] text-black rounded-md shadow-[0_0_20px_rgba(214,166,60,0.3)] block"
+                >
+                  JOIN SGDT ECOSYSTEM
+                </a>
+              </div>
             </div>
           </motion.div>
         )}

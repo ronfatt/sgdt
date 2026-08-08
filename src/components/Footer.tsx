@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { MessageSquare, Send, Github, Globe, FileText, ArrowUp } from "lucide-react";
+import { MessageSquare, Send, Github, FileText, ArrowUp } from "lucide-react";
 
 export const Footer: React.FC = () => {
   const handleScrollToTop = () => {
@@ -19,33 +19,22 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer id="community" className="relative bg-[#030303] text-[#8E8E8E] pt-20 pb-12 border-t border-[#D6A63C]/20 z-10 font-headline">
+    <footer id="community" className="relative bg-[#030303] text-[#8E8E8E] pt-16 sm:pt-20 pb-10 border-t border-[#D6A63C]/20 z-10 font-headline">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Top Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 pb-16 border-b border-[#141414]">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 sm:gap-12 pb-12 sm:pb-16 border-b border-[#141414]">
           
           {/* Brand Info (5 cols) */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-9 h-9 rounded-lg p-0.5 border border-[#D6A63C]/30 bg-[#0A0A0A]">
-                <Image
-                  src="/images/logo-sgdt.png"
-                  alt="SGDT"
-                  width={36}
-                  height={36}
-                  className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                  }}
-                />
-                <div className="absolute inset-0 flex items-center justify-center font-bold text-lg text-[#F0C75E]">
-                  S
-                </div>
-              </div>
-              <span className="text-2xl font-bold tracking-wider text-white">
-                SGDT
-              </span>
+              <Image
+                src="/images/logo-sgdt-full.png"
+                alt="SGDT Protocol"
+                width={150}
+                height={42}
+                className="h-8 sm:h-10 w-auto object-contain"
+              />
             </div>
 
             <p className="text-xs text-[#8E8E8E] leading-relaxed max-w-sm">
@@ -87,7 +76,7 @@ export const Footer: React.FC = () => {
 
           {/* Ecosystem Navigation Links (4 cols) */}
           <div className="md:col-span-4 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F5F5F5] mb-4">
+            <h4 className="text-xs font-bold uppercase tracking-widest text-[#F5F5F5] mb-3">
               QUICK NAVIGATION
             </h4>
             <div className="grid grid-cols-2 gap-2 text-xs">
